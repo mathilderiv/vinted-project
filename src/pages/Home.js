@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom"; // pour rediriger vers une page
 
 import logo from "../img/logo-vinted.svg";
 import mainimage from "../img/main-image.jpg";
@@ -14,17 +15,21 @@ export default function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(
-        "https://lereacteur-vinted-api.herokuapp.com/offers"
-      );
-      setData(response.data);
-      setIsLoading(false);
+      try {
+        const response = await axios.get(
+          "https://lereacteur-vinted-api.herokuapp.com/offers"
+        );
+        setData(response.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error.message);
+      }
     };
     fetchData();
   }, []);
 
   return isLoading === true ? (
-    <div>Chargement...</div>
+    <p>Chargement...</p>
   ) : (
     <div className="App">
       <header className="header">
@@ -63,27 +68,32 @@ export default function Home() {
 
         <section className="popular-articles">
           <h2>Articles populaires</h2>
+          <div className="map">
+            {data.offers.map((element, index) => {
+              return (
+                // <Link to="/offer">Se diriger vers l'offre</Link>
+                <article key={index}>
+                  <div className="offers">
+                    {element.owner.avatar ? (
+                      <img src={element.owner.account.avatar.secure_url} />
+                    ) : null}
 
-          {data.offers.map((element) => {
-            return (
-              <div
-                key={element._id}
-                onClick={() => {
-                  console.log(element);
-                }}
-              />
-            );
-          })}
+                    {element.product_pictures[0] ? (
+                      <img src={element.product_pictures[0].secure_url} />
+                    ) : null}
+                  </div>
+                  <p className="price">{element.product_price} €</p>
+                  <div className="size">
+                    {element.product_details[0] ? (
+                      <p>{element.product_details[1].TAILLE} </p>
+                    ) : null}
+                  </div>
 
-          <img
-            className="offer1"
-            src="{element.owner.account.avatar.secure_url"
-            alt="article à vendre 1"
-          />
-          {/* <img className="offer2" src="" alt="article à vendre 2" />
-            <img className="offer3" src="" alt="article à vendre 3" />
-            <img className="offer4" src="" alt="article à vendre 4" />
-            <img className="offer5" src="" alt="article à vendre 5" /> */}
+                  <p className="brand">{element.product_details[0].MARQUE}</p>
+                </article>
+              );
+            })}
+          </div>
         </section>
       </main>
     </div>
