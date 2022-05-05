@@ -78,7 +78,8 @@ export default function Signup() {
           onChange={handlePasswordChange}
         />
         <button type="submit">S'inscrire</button>
-        <p>S'inscrire à la newsletter</p>
+        <input type="checkbox" id="newsletter" value="newsletter" />
+        <label for="newsletter">S'inscrire à la newsletter</label>
       </form>
     </div>
   );
