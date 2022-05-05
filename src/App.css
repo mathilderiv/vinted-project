@@ -18,6 +18,9 @@ HEADER */
   margin: 0 auto;
 }
 
+.logo-vinted {
+  margin-top: 10px;
+}
 .header img {
   height: 40px;
   width: 80px;

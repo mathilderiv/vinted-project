@@ -21,7 +21,7 @@ export default function Signup() {
           newsletter: true,
         }
       );
-      console.log(response.data);
+      // console.log(response.data);
       setData(response.data);
       setIsLoading(false);
     } catch (error) {
@@ -79,7 +79,7 @@ export default function Signup() {
         />
         <button type="submit">S'inscrire</button>
         <input type="checkbox" id="newsletter" value="newsletter" />
-        <label for="newsletter">S'inscrire à la newsletter</label>
+        <label htmlFor="newsletter">S'inscrire à la newsletter</label>
       </form>
     </div>
   );

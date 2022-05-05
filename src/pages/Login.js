@@ -20,7 +20,7 @@ const Login = () => {
           password: password,
         }
       );
-      console.log(response.data);
+      // console.log(response.data);
       setData(response.data);
       Cookies.set("token", response.data.token, { expires: 1 });
       setIsLoading(false);
