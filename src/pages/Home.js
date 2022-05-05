@@ -36,9 +36,9 @@ export default function Home() {
       <header className="header">
         <img className="logo-vinted" src={logo} alt="logo-vinted" />
         <input type="text" placeholder="Rechercher des articles" />
-        {/* <Link to ="/user/signup" element={<Signup />}  */}
-        <button className="button-1">S'inscrire | Se connecter</button>
-        {/* </Link> */}
+        <Link to="/user/signup">
+          <button className="button-1">S'inscrire | Se connecter</button>
+        </Link>
         <button className="button-2">Vends maitenant</button>
 
         <ul>

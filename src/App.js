@@ -9,6 +9,7 @@ import "./App.css";
 import Home from "./pages/Home";
 import Offer from "./pages/Offer";
 import Signup from "./pages/Signup";
+import Login from "./pages/Login";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/offer/:id" element={<Offer />} />
         <Route path="/user/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   );
