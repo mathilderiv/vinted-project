@@ -1,1 +1,0 @@
-document.write('<div id="abtester" style="display: none">an advertisement</div>');

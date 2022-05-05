@@ -102,8 +102,11 @@ MAIN BLOC */
 h1 {
   font-size: 34px;
   margin-top: 60px;
-  margin-bottom: 45px;
+  margin-bottom: 40px;
+  margin-left: 35px;
+  width: 225px;
   font-weight: bold;
+  white-space: pre-line;
 }
 
 .white-container button {
@@ -123,6 +126,7 @@ h1 {
 
 .white-container p {
   font-size: 14px;
+
   color: #0cadb7;
 }
 

@@ -19,6 +19,7 @@ export default function Home() {
         const response = await axios.get(
           "https://lereacteur-vinted-api.herokuapp.com/offers"
         );
+        //console.log(response.data); //pour afficher dans la console le retour de ma requête
         setData(response.data);
         setIsLoading(false);
       } catch (error) {
@@ -29,15 +30,15 @@ export default function Home() {
   }, []);
 
   return isLoading === true ? (
-    <p>Chargement...</p>
+    <p>Chargement en cours</p>
   ) : (
     <div className="App">
       <header className="header">
         <img className="logo-vinted" src={logo} alt="logo-vinted" />
         <input type="text" placeholder="Rechercher des articles" />
-
+        {/* <Link to ="/user/signup" element={<Signup />}  */}
         <button className="button-1">S'inscrire | Se connecter</button>
-
+        {/* </Link> */}
         <button className="button-2">Vends maitenant</button>
 
         <ul>
@@ -62,7 +63,7 @@ export default function Home() {
           <div className="white-container">
             <h1>Prêts à faire du tri dans vos placards ?</h1>
             <button>Vends maintenant</button>
-            <p>Décourir comment ça marche</p>
+            <p>Découvrir comment ça marche</p>
           </div>
         </div>
 
@@ -71,26 +72,27 @@ export default function Home() {
           <div className="map">
             {data.offers.map((element, index) => {
               return (
-                // <Link to="/offer">Se diriger vers l'offre</Link>
-                <article key={index}>
-                  <div className="offers">
-                    {element.owner.avatar ? (
-                      <img src={element.owner.account.avatar.secure_url} />
-                    ) : null}
+                <Link to={`/offer/${element._id}`} key={element._id}>
+                  <article>
+                    <div className="offers">
+                      {element.owner.avatar ? (
+                        <img src={element.owner.account.avatar.secure_url} />
+                      ) : null}
 
-                    {element.product_pictures[0] ? (
-                      <img src={element.product_pictures[0].secure_url} />
-                    ) : null}
-                  </div>
-                  <p className="price">{element.product_price} €</p>
-                  <div className="size">
-                    {element.product_details[0] ? (
-                      <p>{element.product_details[1].TAILLE} </p>
-                    ) : null}
-                  </div>
+                      {element.product_pictures[0] ? (
+                        <img src={element.product_pictures[0].secure_url} />
+                      ) : null}
+                    </div>
+                    <p className="price">{element.product_price} €</p>
+                    <div className="size">
+                      {element.product_details[0] ? (
+                        <p>{element.product_details[1].TAILLE} </p>
+                      ) : null}
+                    </div>
 
-                  <p className="brand">{element.product_details[0].MARQUE}</p>
-                </article>
+                    <p className="brand">{element.product_details[0].MARQUE}</p>
+                  </article>
+                </Link>
               );
             })}
           </div>
