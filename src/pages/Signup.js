@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Cookies from "js-cookie";
 
 export default function Signup() {
   const [data, setData] = useState();
@@ -7,21 +8,19 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "https://lereacteur-vinted-api.herokuapp.com/user/signup"
-        );
-        console.log(response.data);
-        setData(response.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-    fetchData();
-  }, []);
+  const fetchData = async () => {
+    try {
+      const response = await axios.post(
+        "https://lereacteur-vinted-api.herokuapp.com/user/signup"
+      );
+      console.log(response.data);
+      setData(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  fetchData();
 
   const handleUsernameChange = (event) => {
     const value = event.target.value;
@@ -33,11 +32,7 @@ export default function Signup() {
   };
   const handlePasswordChange = (event) => {
     const value = event.target.value;
-    setEmail(value);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
+    setPassword(value);
   };
 
   return isLoading === true ? (
@@ -45,7 +40,7 @@ export default function Signup() {
   ) : (
     <div className="form">
       <h1>S'inscrire</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={fetchData}>
         <input
           type="text"
           name="username"
@@ -66,7 +61,7 @@ export default function Signup() {
         <br />
 
         <input
-          type="text"
+          type="password"
           name="password"
           id="password"
           value={password}
