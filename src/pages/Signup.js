@@ -10,7 +10,14 @@ const Signup = ({ handleToken }) => {
   const [username, setUsername] = useState("");
   const [newsLetter, setNewsletter] = useState(false);
 
-  const navigate = useNavigate(); //pour naviguer on créé une variable qui contient la fonction use navigate
+  ///////////////////////////////////////////////////////////////
+  //Pour afficher le message d'erreur si l'email existe déjà////
+
+  const [errorMessage, setErrorMessage] = useState("");
+
+  //pour naviguer on créé une variable qui contient la fonction use navigate
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault(); //empêche le rafraîchissement
@@ -28,7 +35,10 @@ const Signup = ({ handleToken }) => {
       handleToken(response.data.token); //utilisation de la fonction Token
       navigate("/"); //Au click s'inscrire l'utilisateur sera redirigé vers la page home
     } catch (error) {
-      console.log(error.response);
+      console.log(error.response.status);
+      if (error.response.status === 409) {
+        setErrorMessage("Email déjà utilisé pour un autre compte");
+      }
     }
   };
 
@@ -50,9 +60,10 @@ const Signup = ({ handleToken }) => {
     <p>Chargement en cours</p>
   ) : (
     <div className="form">
-      <h1>S'inscrire</h1>
-      <form onSubmit={handleSubmit}>
+      <h2>S'inscrire</h2>
+      <form className="form-input" onSubmit={handleSubmit}>
         <input
+          className="username"
           type="text"
           name="username"
           id="username"
@@ -60,9 +71,11 @@ const Signup = ({ handleToken }) => {
           placeholder="Nom d'utilisateur"
           onChange={handleUsernameChange}
         />
+
         <br />
 
         <input
+          className="email"
           type="email"
           name="email"
           id="email"
@@ -73,6 +86,7 @@ const Signup = ({ handleToken }) => {
         <br />
 
         <input
+          className="password"
           type="password"
           name="password"
           id="password"
@@ -83,14 +97,22 @@ const Signup = ({ handleToken }) => {
 
         <br />
         <input
+          className="newsletter"
           type="checkbox"
           checked={newsLetter}
           onChange={() => {
             setNewsletter(!newsLetter);
           }}
         />
+        <span>S'inscrire à notre newsletter</span>
+        <p>
+          En m'inscrivant je confirme avoir lu et accepté les Termes et
+          Conditions et Politique de Confidentialité de Vinted. Je confirme
+          avoir au moins 18 ans
+        </p>
         <br />
         <button type="submit">S'inscrire</button>
+        <p>{errorMessage}</p>
       </form>
     </div>
   );

@@ -62,11 +62,13 @@ export default function Home() {
                         <img src={element.product_pictures[0].secure_url} />
                       ) : null}
                     </div>
-                    <p className="price">{element.product_price} €</p>
-                    <div className="size">
-                      {element.product_details[0] ? (
-                        <p>{element.product_details[1].TAILLE} </p>
-                      ) : null}
+                    <div className="details">
+                      <p className="price">{element.product_price} €</p>
+                      <div className="size">
+                        {element.product_details[0] ? (
+                          <p>{element.product_details[1].TAILLE} </p>
+                        ) : null}
+                      </div>
                     </div>
 
                     <p className="brand">{element.product_details[0].MARQUE}</p>

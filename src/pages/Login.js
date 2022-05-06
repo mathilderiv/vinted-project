@@ -2,12 +2,14 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
-  const [data, setData] = useState();
+const Login = ({ handleToken }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -20,7 +22,9 @@ const Login = () => {
         }
       );
 
-      setData(response.data);
+      // console.log(response.data);
+      handleToken(response.data.token); //Pour stocker les valeurs
+      navigate("/");
     } catch (error) {
       console.log(error.response);
     }
@@ -37,10 +41,12 @@ const Login = () => {
   return isLoading === true ? (
     <p>Chargement en cours</p>
   ) : (
-    <div className="form">
-      <h1>Se connecter</h1>
+    <div className="formlogin">
+      <h2>Se connecter</h2>
+
       <form onSubmit={handleSubmit}>
         <input
+          className="email-login"
           type="email"
           name="email"
           id="email"
@@ -50,6 +56,7 @@ const Login = () => {
         />
         <br />
         <input
+          className="password-login"
           type="password"
           name="password"
           id="password"
@@ -57,8 +64,11 @@ const Login = () => {
           placeholder="Mot de passe"
           onChange={handlePasswordChange}
         />
-        <input type="submit">Se connecter</input>
-        <Link to="/user/signup">
+
+        <div className="input-submit">
+          <input type="submit" value="Se connecter" />
+        </div>
+        <Link to="/user/signup" style={{ textDecoration: "none" }}>
           <p>Pas encore de compte ? Inscris toi</p>
         </Link>
       </form>
