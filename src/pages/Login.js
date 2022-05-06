@@ -9,21 +9,18 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const fetchData = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       const response = await axios.post(
         "https://lereacteur-vinted-api.herokuapp.com/user/login",
         {
           email: email,
-
           password: password,
         }
       );
-      // console.log(response.data);
+
       setData(response.data);
-      Cookies.set("token", response.data.token, { expires: 1 });
-      setIsLoading(false);
     } catch (error) {
       console.log(error.response);
     }
@@ -42,7 +39,7 @@ const Login = () => {
   ) : (
     <div className="form">
       <h1>Se connecter</h1>
-      <form onSubmit={fetchData}>
+      <form onSubmit={handleSubmit}>
         <input
           type="email"
           name="email"
@@ -60,7 +57,7 @@ const Login = () => {
           placeholder="Mot de passe"
           onChange={handlePasswordChange}
         />
-        <button type="submit">S'inscrire</button>
+        <input type="submit">Se connecter</input>
         <Link to="/user/signup">
           <p>Pas encore de compte ? Inscris toi</p>
         </Link>

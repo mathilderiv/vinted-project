@@ -1,29 +1,32 @@
 import axios from "axios";
 import { useState } from "react";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
-export default function Signup() {
-  const [data, setData] = useState();
+const Signup = ({ handleToken }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [newsLetter, setNewsletter] = useState(false);
 
-  const fetchData = async (event) => {
-    event.preventDefault();
+  const navigate = useNavigate(); //pour naviguer on créé une variable qui contient la fonction use navigate
+
+  const handleSubmit = async (event) => {
+    event.preventDefault(); //empêche le rafraîchissement
     try {
       const response = await axios.post(
         "https://lereacteur-vinted-api.herokuapp.com/user/signup",
         {
-          email: email,
+          email: email, // autre syntaxe si les 2 noms sont identiques : juste email, username,
           username: username,
           password: password,
-          newsletter: true,
+          newsletter: newsLetter,
         }
       );
       // console.log(response.data);
-      setData(response.data);
-      setIsLoading(false);
+      handleToken(response.data.token); //utilisation de la fonction Token
+      navigate("/"); //Au click s'inscrire l'utilisateur sera redirigé vers la page home
     } catch (error) {
       console.log(error.response);
     }
@@ -48,7 +51,7 @@ export default function Signup() {
   ) : (
     <div className="form">
       <h1>S'inscrire</h1>
-      <form onSubmit={fetchData}>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           name="username"
@@ -77,10 +80,20 @@ export default function Signup() {
           placeholder="Mot de passe"
           onChange={handlePasswordChange}
         />
+
+        <br />
+        <input
+          type="checkbox"
+          checked={newsLetter}
+          onChange={() => {
+            setNewsletter(!newsLetter);
+          }}
+        />
+        <br />
         <button type="submit">S'inscrire</button>
-        <input type="checkbox" id="newsletter" value="newsletter" />
-        <label htmlFor="newsletter">S'inscrire à la newsletter</label>
       </form>
     </div>
   );
-}
+};
+
+export default Signup;

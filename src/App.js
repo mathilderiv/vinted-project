@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import logo from "./img/logo-vinted.svg";
+
 import "./App.css";
 import { Link } from "react-router-dom"; // pour rediriger vers une page
-
+import Cookies from "js-cookie";
 import { useState } from "react";
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -13,42 +13,31 @@ import Home from "./pages/Home";
 import Offer from "./pages/Offer";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import Header from "./components/Header";
 
 function App() {
-  const [token, setToken] = useState("");
+  const handleToken = (token) => {
+    if (token) {
+      Cookies.set("userToken", token, { expires: 7 });
+    } else {
+      Cookies.remove("userToken");
+    }
+  };
+  //   }
   return (
     <Router>
-      <header className="header">
-        <img className="logo-vinted" src={logo} alt="logo-vinted" />
-        <input type="text" placeholder="Rechercher des articles" />
-
-        <Link to="/user/signup">
-          {/* <div>
-            {setToken ? (
-              <button className="button-deconnect">Se déconnecter</button>
-            ) : ( */}
-          <button className="button-1">S'inscrire | Se connecter</button>
-          {/* )}
-          </div> */}
-        </Link>
-        <button className="button-2">Vends maitenant</button>
-
-        <ul>
-          <li>Femmes</li>
-          <li>Hommes</li>
-          <li>Enfants</li>
-          <li>Maison</li>
-          <li>Divertissement</li>
-          <li>Animaux</li>
-          <li>A propos</li>
-          <li>Notre plateforme</li>
-        </ul>
-      </header>
+      <Header handleToken={handleToken} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/offer/:id" element={<Offer />} />
-        <Route path="/user/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/user/signup"
+          element={<Signup handleToken={handleToken} />}
+        />
+        <Route
+          path="/user/login"
+          element={<Login handleToken={handleToken} />}
+        />
       </Routes>
     </Router>
   );

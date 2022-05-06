@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; // pour rediriger vers une page
-
+import Header from "../components/Header";
 import mainimage from "../img/main-image.jpg";
 
 export default function Home() {
