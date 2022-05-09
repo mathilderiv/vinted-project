@@ -67,7 +67,7 @@ const Publish = () => {
       );
       console.log(response.data);
 
-      navigate("/");
+      navigate("/offer/" + response.data._id);
     } catch (error) {
       console.log(error.response.data);
     }
