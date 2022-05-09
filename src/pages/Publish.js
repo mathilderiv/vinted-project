@@ -4,17 +4,18 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
-const Publish = ({ handleToken }) => {
+const Publish = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState(null);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [brand, setBrand] = useState("");
   const [size, setSize] = useState("");
   const [color, setColor] = useState("");
-  const [state, setState] = useState("");
+  const [condition, setCondition] = useState("");
   const [city, setCity] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(Number);
 
   ///////////////////////////////////////////////////////////////////////////////
   //                      GESTION DE L'IMPORT DE L'IMAGE                     //
@@ -22,33 +23,35 @@ const Publish = ({ handleToken }) => {
   const [picture, setPicture] = useState(null);
   const [isPictureSending, setPictureSending] = useState(false);
 
-  const handleSendPicture = async (event) => {
-    event.preventDefault();
-    setPictureSending(true);
-  };
+  ////////////////////////////////////////////////////////////////////////////////
+  //                       TOKEN                                                //
 
-  const formData = new FormData();
-  formData.append("picture", picture);
+  const token = Cookies.get("userToken");
+  //   console.log(token);
 
   ////////////////////////////////////////////////////////////////////////////////
   //                   GESTION DES CHAMPS DU FORMULAIRE                         //
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    // setPictureSending(true);
+
+    const formData = new FormData();
+    formData.append("picture", picture);
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("price", price);
+    formData.append("condition", condition);
+    formData.append("city", city);
+    formData.append("brand", brand);
+    formData.append("size", size);
+    formData.append("color", color);
+
     try {
       const response = await axios.post(
         "https://lereacteur-vinted-api.herokuapp.com/offer/publish",
-        {
-          title: title,
-          description: description,
-          price: price,
-          condition: state,
-          city: city,
-          brand: brand,
-          size: size,
-          color: color,
-          picture: picture, // le fichier image sélectionné par l'utilisateur
-        },
+
+        formData,
 
         {
           headers: {
@@ -56,10 +59,8 @@ const Publish = ({ handleToken }) => {
           },
         }
       );
-      handleToken(response.data.token); //utilisation de la fonction Token
-      console.log(response.data);
     } catch (error) {
-      console.log(error.response.status);
+      console.log(error.response.data);
     }
   };
 
@@ -88,9 +89,9 @@ const Publish = ({ handleToken }) => {
     setColor(value);
   };
 
-  const handleStateChange = (event) => {
+  const handleConditionChange = (event) => {
     const value = event.target.value;
-    setState(value);
+    setCondition(value);
   };
 
   const handleCityChange = (event) => {
@@ -110,8 +111,15 @@ const Publish = ({ handleToken }) => {
       <h2>Vends ton article</h2>
       <br />
       <form onSubmit={handleSubmit}>
-        <input type="file" onChange={handleSendPicture} />
+        <input
+          type="file"
+          value={picture}
+          onChange={(event) => {
+            setPicture(event.target.files[0]);
+          }}
+        />
         <br />
+        <span>Titre</span>
 
         <input
           type="text"
@@ -123,7 +131,7 @@ const Publish = ({ handleToken }) => {
         />
 
         <br />
-
+        <span>Description</span>
         <input
           type="text"
           name="description"
@@ -135,6 +143,7 @@ const Publish = ({ handleToken }) => {
 
         <br />
 
+        <span>Marque</span>
         <input
           type="text"
           name="brand"
@@ -146,6 +155,7 @@ const Publish = ({ handleToken }) => {
 
         <br />
 
+        <span>Taille</span>
         <input
           type="text"
           name="size"
@@ -157,6 +167,7 @@ const Publish = ({ handleToken }) => {
 
         <br />
 
+        <span>Couleur</span>
         <input
           type="text"
           name="color"
@@ -167,18 +178,18 @@ const Publish = ({ handleToken }) => {
         />
 
         <br />
-
+        <span>Condition</span>
         <input
           type="text"
-          name="state"
-          id="state"
-          value={state}
+          name="condition"
+          id="condition"
+          value={condition}
           placeholder="ex : Neuf sans étiquette"
-          onChange={handleStateChange}
+          onChange={handleConditionChange}
         />
 
         <br />
-
+        <span>Ville</span>
         <input
           type="text"
           name="city"
@@ -190,6 +201,7 @@ const Publish = ({ handleToken }) => {
 
         <br />
 
+        <span>Prix</span>
         <input
           type="text"
           name="price"
@@ -202,6 +214,11 @@ const Publish = ({ handleToken }) => {
         <br />
         <button type="submit">Ajouter</button>
       </form>
+      {isPictureSending === true ? (
+        <div>Image en cours de téléchargement</div>
+      ) : (
+        data && <img src={data.secure_url} alt="" />
+      )}
     </div>
   );
 };
