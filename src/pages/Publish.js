@@ -2,8 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
-const Publish = () => {
+const Publish = ({ handleToken }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [title, setTitle] = useState("");
@@ -47,15 +48,15 @@ const Publish = () => {
           size: size,
           color: color,
           picture: picture, // le fichier image sélectionné par l'utilisateur
+        },
+
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
         }
-
-        //     {
-        //       headers: {
-        //         authorization: `Bearer ${token}`,
-        //       },
-        // }
       );
-
+      handleToken(response.data.token); //utilisation de la fonction Token
       console.log(response.data);
     } catch (error) {
       console.log(error.response.status);
@@ -109,12 +110,7 @@ const Publish = () => {
       <h2>Vends ton article</h2>
       <br />
       <form onSubmit={handleSubmit}>
-        <input
-          type="file"
-          onChange={(event) => {
-            setPicture(event.target.files);
-          }}
-        />
+        <input type="file" onChange={handleSendPicture} />
         <br />
 
         <input
