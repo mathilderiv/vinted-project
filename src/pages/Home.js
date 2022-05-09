@@ -59,7 +59,7 @@ export default function Home() {
                       ) : null}
 
                       {element.product_pictures[0] ? (
-                        <img src={element.product_pictures[0].secure_url} />
+                        <img src={element.product_image.secure_url} />
                       ) : null}
                     </div>
                     <div className="details">

@@ -1,6 +1,7 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
+
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
@@ -16,6 +17,10 @@ const Publish = () => {
   const [condition, setCondition] = useState("");
   const [city, setCity] = useState("");
   const [price, setPrice] = useState(Number);
+
+  const { id } = useParams();
+
+  const navigate = useNavigate();
 
   ///////////////////////////////////////////////////////////////////////////////
   //                      GESTION DE L'IMPORT DE L'IMAGE                     //
@@ -34,6 +39,7 @@ const Publish = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     // setPictureSending(true);
 
     const formData = new FormData();
@@ -59,6 +65,9 @@ const Publish = () => {
           },
         }
       );
+      console.log(response.data);
+
+      navigate("/");
     } catch (error) {
       console.log(error.response.data);
     }
@@ -113,7 +122,6 @@ const Publish = () => {
       <form onSubmit={handleSubmit}>
         <input
           type="file"
-          value={picture}
           onChange={(event) => {
             setPicture(event.target.files[0]);
           }}

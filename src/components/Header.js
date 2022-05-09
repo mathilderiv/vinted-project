@@ -26,9 +26,9 @@ const Header = ({ handleToken, userToken }) => {
           Déconnexion
         </button>
       )}
-
-      <button className="button-2">Vends maitenant</button>
-
+      <Link to="/publish">
+        <button className="button-2">Vends maitenant</button>
+      </Link>
       <ul>
         <li>Femmes</li>
         <li>Hommes</li>
