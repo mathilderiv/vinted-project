@@ -130,9 +130,9 @@ SIGNIN */
 .form button {
   background-color: #0cadb7;
   border: #0cadb7 1px solid;
-  color: white;
-  height: 30px;
-  width: 120px;
+  /* color: white; */
+  height: 45px;
+
   font-size: 12px;
 
   border-radius: 5px;
