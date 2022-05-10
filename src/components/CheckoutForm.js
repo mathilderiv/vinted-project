@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios from "axios";
@@ -6,6 +7,14 @@ import axios from "axios";
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
+
+  const location = useLocation();
+  const { title } = location.state;
+  const { price } = location.state;
+
+  const priceProtection = price * 0.5;
+  const expeditionCost = price * 0.2;
+  const totalPrice = price + priceProtection + expeditionCost;
 
   const [completed, setCompleted] = useState(false);
 
@@ -17,15 +26,18 @@ const CheckoutForm = () => {
 
     //NUMERO 2 : Envoi des données à l'API de stripe
     const stripeResponse = await stripe.createToken(cardElements);
-    // console.log(stripeResponse);
+    console.log(stripeResponse);
 
+    const stripeToken = stripeResponse.token.id;
     //NUMEO 3 : envoi du token à mon serveur reacteur
 
     try {
       const response = await axios.post(
         "https://lereacteur-vinted-api.herokuapp.com/payment",
         {
-          stripeToken: stripeResponse.userToken.id,
+          token: stripeToken,
+          title: { title },
+          amount: { price },
         }
       );
 
@@ -33,7 +45,7 @@ const CheckoutForm = () => {
         setCompleted(true);
       }
     } catch (error) {
-      console.log(error.response.data);
+      console.log(error.message);
     }
   };
 
@@ -43,15 +55,21 @@ const CheckoutForm = () => {
         <form onSubmit={handleSubmit}>
           <h2>Résumé de la commande</h2>
           <ul>
-            <li>Commande </li>
-            <li>Frais de protection acheteurs</li>
-            <li>Frais de port</li>
+            <li>
+              Commande<span>{price}</span>
+            </li>
+            <li>
+              Frais de protection acheteurs<span>{priceProtection}</span>
+            </li>
+            <li>
+              Frais de port<span>{expeditionCost}</span>
+            </li>
           </ul>
           <h3>Total</h3>
           <p>
-            Il ne vous reste plus qu'une étape pour vous offrir "nom du
-            produit". Vous allez payer "total" (frais de protection et frais de
-            port inclus).
+            Il ne vous reste plus qu'une étape pour vous offrir {title}. Vous
+            allez payer {totalPrice} (frais de protection et frais de port
+            inclus).
           </p>
           <CardElement />
           <button type="submit">Valider le paiement</button>

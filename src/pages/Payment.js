@@ -1,5 +1,6 @@
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import { useLocation } from "react-router-dom";
 
 import CheckoutForm from "../components/CheckoutForm";
 
@@ -11,7 +12,7 @@ export default function Payment() {
   return (
     <div className="payment">
       <Elements stripe={stripePromise}>
-        <CheckoutForm />
+        <CheckoutForm title={title} price={price} />
       </Elements>
     </div>
   );
