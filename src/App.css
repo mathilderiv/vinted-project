@@ -89,6 +89,16 @@ input::placeholder {
   margin-left: 10px;
 }
 
+.disconnected {
+  height: 30px;
+  width: 120px;
+  border: #a80000 1px solid;
+  background-color: #a80000;
+  color: white;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
 /* 
 SIGNUP */
 
@@ -198,7 +208,7 @@ LOGIN */
   text-align: center;
 }
 
-/* PAGE OFFER  */
+/* PAGE PUBLISH  */
 
 .offer-form {
   display: flex;
@@ -244,6 +254,90 @@ LOGIN */
   border-radius: 5px;
   border: none;
 }
+
+/* PAGE OFFER  */
+
+.my-offer {
+  display: flex;
+
+  margin: 50px auto;
+}
+
+.picture-offer {
+  width: 920px;
+  height: 620px;
+  object-fit: contain;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+}
+
+.right h2 {
+  font-size: 24px;
+}
+
+.right p {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 125px;
+  width: 210px;
+}
+
+.text span {
+  color: #0cadb7;
+}
+
+/* PAGE PAYMENT */
+
+.recap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 70vh;
+
+  margin: 0 auto;
+}
+
+.recap h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  margin-top: 50px;
+}
+
+.recap li {
+  width: 30vw;
+  margin-bottom: 30px;
+}
+
+li span {
+  font-weight: bold;
+  margin-left: 100px;
+}
+
+.details span {
+  font-weight: bold;
+  margin-left: 3px;
+}
+
+.recap h3 {
+  font-size: 20px;
+}
+
+.recap p {
+  margin-top: 30px;
+  width: 30%;
+  margin-bottom: 30px;
+}
+
+.pay-button {
+  height: 150px;
+  width: 50%;
+}
+
 /* 
 MAIN */
 /* 

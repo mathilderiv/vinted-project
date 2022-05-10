@@ -26,17 +26,30 @@ const Offer = () => {
   return isLoading === true ? (
     <div> En cours de chargement </div>
   ) : (
-    <div>
-      <p>{data.product_name}</p>
-      <span>{data.product_price}</span>
-      <img
-        src={data.product_image.secure_url}
-        style={{ width: "100px" }}
-        alt=""
-      />
+    <div className="my-offer">
+      <div className="left">
+        <img
+          className="picture-offer"
+          src={data.product_image.secure_url}
+          alt=""
+        />
+      </div>
+      <div className="right">
+        <span>{data.product_price}€</span>
+        <p className="text">
+          Notre <span>protection acheteurs</span> est ajoutée moyennant des
+          frais, pour chaque transaction effectuée par le biais du bouton
+          "Acheter". Cette protection acheteurs comprends notre
+          <span> politique de remboursement</span>.
+        </p>
+
+        <h2>{data.product_name}</h2>
+      </div>
+
       <div>
         {data.product_details.map((details, index) => {
           const keys = Object.keys(details); //méthode
+
           return (
             <div key={index}>
               {/* accéder aux clés de l'objet via une variable */}

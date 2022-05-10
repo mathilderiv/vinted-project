@@ -4,17 +4,9 @@ import { useLocation } from "react-router-dom";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios from "axios";
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ title, price }) => {
   const stripe = useStripe();
   const elements = useElements();
-
-  const location = useLocation();
-  const { title } = location.state;
-  const { price } = location.state;
-
-  const priceProtection = price * 0.5;
-  const expeditionCost = price * 0.2;
-  const totalPrice = price + priceProtection + expeditionCost;
 
   const [completed, setCompleted] = useState(false);
 
@@ -36,8 +28,8 @@ const CheckoutForm = () => {
         "https://lereacteur-vinted-api.herokuapp.com/payment",
         {
           token: stripeToken,
-          title: { title },
-          amount: { price },
+          title,
+          amount: price,
         }
       );
 
@@ -45,39 +37,22 @@ const CheckoutForm = () => {
         setCompleted(true);
       }
     } catch (error) {
-      console.log(error.message);
+      console.log(error.response.data);
+      console.log(typeof price);
     }
   };
 
   return (
-    <>
-      {!completed ? (
+    <div>
+      {completed ? (
+        <p>Paiement validé</p>
+      ) : (
         <form onSubmit={handleSubmit}>
-          <h2>Résumé de la commande</h2>
-          <ul>
-            <li>
-              Commande<span>{price}</span>
-            </li>
-            <li>
-              Frais de protection acheteurs<span>{priceProtection}</span>
-            </li>
-            <li>
-              Frais de port<span>{expeditionCost}</span>
-            </li>
-          </ul>
-          <h3>Total</h3>
-          <p>
-            Il ne vous reste plus qu'une étape pour vous offrir {title}. Vous
-            allez payer {totalPrice} (frais de protection et frais de port
-            inclus).
-          </p>
           <CardElement />
           <button type="submit">Valider le paiement</button>
         </form>
-      ) : (
-        <span>Paiement effectué !</span>
       )}
-    </>
+    </div>
   );
 };
 

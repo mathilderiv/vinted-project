@@ -23,6 +23,7 @@ const Header = ({ handleToken, userToken }) => {
         </>
       ) : (
         <button
+          className="disconnected"
           onClick={() => {
             handleToken(); //Pas d'argument cela supprimera donc le cookie
           }}
