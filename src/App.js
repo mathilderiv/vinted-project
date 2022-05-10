@@ -2,8 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Cookies from "js-cookie";
 import { useState } from "react";
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
 
 import "./App.css";
 
@@ -20,9 +18,6 @@ import Publish from "./pages/Publish";
 import Payment from "./pages/Payment";
 
 function App() {
-  const stripePromise = loadStripe(
-    "pk_test_51HCObyDVswqktOkX6VVcoA7V2sjOJCUB4FBt3EOiAdSz5vWudpWxwcSY8z2feWXBq6lwMgAb5IVZZ1p84ntLq03H00LDVc2RwP"
-  );
   const [userToken, setUserToken] = useState(Cookies.get("userToken") || null); // Si pas connecter state vaut null donc ternaire dans le header affiche connexion et s'inscrire sinon contient un token donc ternaire réévaluer et le bouton déconnexion s'affiche
 
   const handleToken = (token) => {
@@ -51,9 +46,7 @@ function App() {
         />
         <Route path="/publish" element={<Publish />} />
 
-        <Elements stripe={stripePromise}>
-          <Route path="/payment" element={<Payment />} />
-        </Elements>
+        <Route path="/payment" element={<Payment />} />
       </Routes>
     </Router>
   );
