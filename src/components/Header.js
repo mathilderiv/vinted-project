@@ -1,13 +1,17 @@
 import logo from "../img/logo-vinted.svg";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Header = ({ handleToken, userToken }) => {
+  const token = Cookies.get("userToken");
+  const navigate = useNavigate();
   return (
     <header className="header">
-      <img className="logo-vinted" src={logo} alt="logo-vinted" />
+      <Link to="/">
+        <img className="logo-vinted" src={logo} alt="logo-vinted" />
+      </Link>
       <input type="text" placeholder="Rechercher des articles" />
-
       {!userToken ? (
         <>
           <Link to="/user/signup">
@@ -26,9 +30,11 @@ const Header = ({ handleToken, userToken }) => {
           Déconnexion
         </button>
       )}
+
       <Link to="/publish">
         <button className="button-2">Vends maitenant</button>
       </Link>
+
       <ul>
         <li>Femmes</li>
         <li>Hommes</li>

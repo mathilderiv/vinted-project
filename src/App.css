@@ -90,14 +90,14 @@ input::placeholder {
 }
 
 /* 
-SIGNIN */
+SIGNUP */
 
 .form {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 50vh;
+  height: 70vh;
 }
 
 .email,
@@ -130,7 +130,7 @@ SIGNIN */
 .form button {
   background-color: #0cadb7;
   border: #0cadb7 1px solid;
-  /* color: white; */
+  color: white;
   height: 45px;
 
   font-size: 12px;
@@ -196,6 +196,53 @@ LOGIN */
   color: #0cadb7;
   font-size: 12px;
   text-align: center;
+}
+
+/* PAGE OFFER  */
+
+.offer-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 960px;
+
+  margin: 0 auto;
+}
+
+.offer-form h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  margin-top: 50px;
+}
+
+.offer-form input {
+  border: none;
+  background-color: transparent;
+  color: white;
+  margin-top: 20px;
+  outline: none;
+  color: grey;
+  line-height: 20px;
+  font-size: 16px;
+  width: 450px;
+  border-bottom: #0cadb7 1px solid;
+  margin-left: 50%;
+}
+
+.picture {
+  border: black solid 1px;
+  height: 20vh;
+}
+
+.button-add {
+  margin-top: 30px;
+  height: 50px;
+  width: 80px;
+  background-color: #0cadb7;
+  color: white;
+  border-radius: 5px;
+  border: none;
 }
 /* 
 MAIN */

@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
-
+import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
@@ -17,8 +16,6 @@ const Publish = () => {
   const [condition, setCondition] = useState("");
   const [city, setCity] = useState("");
   const [price, setPrice] = useState(Number);
-
-  const { id } = useParams();
 
   const navigate = useNavigate();
 
@@ -62,6 +59,7 @@ const Publish = () => {
         {
           headers: {
             authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -113,14 +111,13 @@ const Publish = () => {
     setPrice(value);
   };
 
-  return isLoading === true ? (
-    <p>En cours de chargement...</p>
-  ) : (
+  return token ? (
     <div className="offer-form">
       <h2>Vends ton article</h2>
       <br />
       <form onSubmit={handleSubmit}>
         <input
+          className="picture"
           type="file"
           onChange={(event) => {
             setPicture(event.target.files[0]);
@@ -220,7 +217,9 @@ const Publish = () => {
         />
 
         <br />
-        <button type="submit">Ajouter</button>
+        <button className="button-add" type="submit">
+          Ajouter
+        </button>
       </form>
       {isPictureSending === true ? (
         <div>Image en cours de téléchargement</div>
@@ -228,6 +227,8 @@ const Publish = () => {
         data && <img src={data.secure_url} alt="" />
       )}
     </div>
+  ) : (
+    <Navigate to="/user/login" />
   );
 };
 

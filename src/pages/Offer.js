@@ -44,6 +44,8 @@ const Offer = () => {
           );
         })}
       </div>
+
+      <button>Acheter</button>
     </div>
   );
 };

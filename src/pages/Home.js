@@ -41,7 +41,9 @@ export default function Home() {
           />
           <div className="white-container">
             <h1>Prêts à faire du tri dans vos placards ?</h1>
-            <button>Vends maintenant</button>
+            <Link to="/publish">
+              <button>Vends maintenant</button>
+            </Link>
             <p>Découvrir comment ça marche</p>
           </div>
         </div>
