@@ -25,7 +25,7 @@ const CheckoutForm = () => {
       const response = await axios.post(
         "https://lereacteur-vinted-api.herokuapp.com/payment",
         {
-          stripeToken: stripeResponse.token.id,
+          stripeToken: stripeResponse.userToken.id,
         }
       );
 
@@ -35,31 +35,32 @@ const CheckoutForm = () => {
     } catch (error) {
       console.log(error.response.data);
     }
-
-    return (
-      <>
-        {!completed ? (
-          <form onSubmit={handleSubmit}>
-            <h2>Résumé de la commande</h2>
-            <ul>
-              <li>Commande </li>
-              <li>Frais de protection acheteurs</li>
-              <li>Frais de port</li>
-            </ul>
-            <h3>Total</h3>
-            <p>
-              Il ne vous reste plus qu'une étape pour vous offrir "nom du
-              produit". Vous allez payer "total" (frais de protection et frais
-              de port inclus).
-            </p>
-            <button type="submit">Valider le paiement</button>
-          </form>
-        ) : (
-          <span>Paiement effectué !</span>
-        )}
-      </>
-    );
   };
+
+  return (
+    <>
+      {!completed ? (
+        <form onSubmit={handleSubmit}>
+          <h2>Résumé de la commande</h2>
+          <ul>
+            <li>Commande </li>
+            <li>Frais de protection acheteurs</li>
+            <li>Frais de port</li>
+          </ul>
+          <h3>Total</h3>
+          <p>
+            Il ne vous reste plus qu'une étape pour vous offrir "nom du
+            produit". Vous allez payer "total" (frais de protection et frais de
+            port inclus).
+          </p>
+          <CardElement />
+          <button type="submit">Valider le paiement</button>
+        </form>
+      ) : (
+        <span>Paiement effectué !</span>
+      )}
+    </>
+  );
 };
 
 export default CheckoutForm;
